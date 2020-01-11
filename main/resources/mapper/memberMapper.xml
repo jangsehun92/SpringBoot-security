@@ -3,6 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="jsh.project.security.dao.MemberMapper">	
-        
+        <insert id="save" parameterType="Member">
+                INSERT INTO
+                        test_member_table
+                VALUES(
+                        test_member_table_seq.nextval,
+                        #{email},
+                        #{password},
+                        SYSDATE,
+                        null
+                )
+        </insert>
+
+        <select id="login" parameterType="java.lang.String" resultType="MemberDto">
+                select 
+                        *
+                FROM 
+                        test_member_table
+                WHERE
+                        email = #{userEmail}
+        </select>
 
 </mapper>

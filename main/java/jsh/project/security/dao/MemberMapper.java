@@ -4,12 +4,13 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import jsh.project.security.domain.MemberEntity;
+import jsh.project.security.domain.Member;
+import jsh.project.security.dto.MemberDto;
 
 @Mapper
 public interface MemberMapper{
-    public int save(MemberEntity member);
+    public int save(Member member);
 
-    public Optional<MemberEntity> findByEmail(String userEmail);
+    public Optional<MemberDto> login(String userEmail);
     
 }

@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jsh.project.security.dao.MemberMapper;
-import jsh.project.security.domain.MemberEntity;
-import jsh.project.security.domain.MemberRole;
+import jsh.project.security.domain.Role;
 import jsh.project.security.dto.MemberDto;
 import lombok.AllArgsConstructor;
 
@@ -30,25 +29,25 @@ public class MemberService implements UserDetailsService{
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 
-        return memberMapper.save(memberDto.toEntity());
+        return memberMapper.save(memberDto.toDomainObject());
     }
 
 	@Override
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        Optional<MemberEntity> userWrapper = memberMapper.findByEmail(userEmail);
-        MemberEntity userEntity = userWrapper.get();
-
+        System.out.println(userEmail);
+        Optional<MemberDto> memberDtoWrapper = memberMapper.login(userEmail);
+        MemberDto user = memberDtoWrapper.get();
+        
         List<GrantedAuthority> authorities = new ArrayList<>();
-
-
-
-		if (("admin@example.com").equals(userEmail)) {
-            authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
+        
+		if (("admin@admin.com").equals(userEmail)) {
+            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         } else {
-            authorities.add(new SimpleGrantedAuthority(MemberRole.MEMBER.getValue()));
+            authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
         }
+        
+        return new User(user.getEmail(), user.getPassword(), authorities);
 
-        return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
 	}
 
     

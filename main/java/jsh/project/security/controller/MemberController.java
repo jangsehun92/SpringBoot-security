@@ -2,14 +2,16 @@ package jsh.project.security.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import jsh.project.security.dto.MemberDto;
 import jsh.project.security.service.MemberService;
 import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
 public class MemberController {
-    private MemberService memberServie;
+    private MemberService memberService;
 
     @GetMapping("/")
     public String index(){
@@ -22,19 +24,17 @@ public class MemberController {
         return "/signup";
     }
 
-    /*
     // 회원가입 처리
     @PostMapping("/user/signup")
     public String execSignup(MemberDto memberDto) {
         memberService.joinUser(memberDto);
-
         return "redirect:/user/login";
     }
-    */
 
     // 로그인 페이지
     @GetMapping("/user/login")
     public String dispLogin() {
+        System.out.println("들어옴!!!!");
         return "/login";
     }
 

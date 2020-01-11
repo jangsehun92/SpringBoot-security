@@ -2,7 +2,7 @@ package jsh.project.security.dto;
 
 import java.time.LocalDateTime;
 
-import jsh.project.security.domain.MemberEntity;
+import jsh.project.security.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +21,16 @@ public class MemberDto{
     private LocalDateTime modefiedDate;
 
 
-    public MemberEntity toEntity(){
-        return MemberEntity.builder()
+    public Member toDomainObject(){
+        /*
+        return Member.builder()
         .id(id)
         .email(email)
         .password(password)
         .build();
+        */
+
+        return new Member(id,email,password);
     }
 
     @Builder
