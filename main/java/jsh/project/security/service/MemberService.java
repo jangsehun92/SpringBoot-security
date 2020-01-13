@@ -26,20 +26,22 @@ public class MemberService implements UserDetailsService{
 
     @Transactional
     public int joinUser(MemberDto memberDto){
+        //회원가입시 Role부여하기
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-
         return memberMapper.save(memberDto.toDomainObject());
     }
 
 	@Override
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+        //login 함수를 만들던지, LoginRequestDto를 통해 로그인을 하던지 둘중하나로 바꾸기
         System.out.println(userEmail);
         Optional<MemberDto> memberDtoWrapper = memberMapper.login(userEmail);
         MemberDto user = memberDtoWrapper.get();
         
         List<GrantedAuthority> authorities = new ArrayList<>();
         
+        //로그인한 유저의 Role을 확인하여 권한을 부여하자 
 		if (("admin@admin.com").equals(userEmail)) {
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         } else {
