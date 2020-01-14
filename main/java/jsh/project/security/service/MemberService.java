@@ -34,14 +34,14 @@ public class MemberService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        //login 함수를 만들던지, LoginRequestDto를 통해 로그인을 하던지 둘중하나로 바꾸기
+        //UserDetails 좀더 공부해야함
         System.out.println(userEmail);
         Optional<MemberDto> memberDtoWrapper = memberMapper.login(userEmail);
         MemberDto user = memberDtoWrapper.get();
         
         List<GrantedAuthority> authorities = new ArrayList<>();
         
-        //로그인한 유저의 Role을 확인하여 권한을 부여하자 
+        //로그인한 유저의 Role을 가져와서 User 객체에 담아주기
 		if (("admin@admin.com").equals(userEmail)) {
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         } else {
