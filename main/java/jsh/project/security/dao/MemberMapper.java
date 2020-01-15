@@ -11,6 +11,6 @@ import jsh.project.security.dto.MemberDto;
 public interface MemberMapper{
     public int save(Member member);
 
-    public Optional<MemberDto> login(String userEmail);
+    public Optional<MemberDto> findMember(String userEmail);
     
 }

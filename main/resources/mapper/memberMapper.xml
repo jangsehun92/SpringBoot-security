@@ -15,7 +15,7 @@
                 )
         </insert>
 
-        <select id="login" parameterType="java.lang.String" resultType="MemberDto">
+        <select id="findMember" parameterType="java.lang.String" resultType="MemberDto">
                 select 
                         *
                 FROM 

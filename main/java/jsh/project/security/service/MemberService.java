@@ -34,9 +34,7 @@ public class MemberService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        //UserDetails 좀더 공부해야함
-        System.out.println(userEmail);
-        Optional<MemberDto> memberDtoWrapper = memberMapper.login(userEmail);
+        Optional<MemberDto> memberDtoWrapper = memberMapper.findMember(userEmail);
         MemberDto user = memberDtoWrapper.get();
         
         List<GrantedAuthority> authorities = new ArrayList<>();
