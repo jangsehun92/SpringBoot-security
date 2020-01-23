@@ -34,7 +34,6 @@ public class MemberController {
     // 로그인 페이지
     @GetMapping("/user/login")
     public String dispLogin() {
-        System.out.println("들어옴!!!!");
         return "/login";
     }
 

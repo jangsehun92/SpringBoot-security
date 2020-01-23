@@ -27,6 +27,7 @@ public class MemberService implements UserDetailsService{
     @Transactional
     public int joinUser(MemberDto memberDto){
         //회원가입시 Role부여하기
+        //memberDto.setRole();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         return memberMapper.save(memberDto.toDomainObject());
@@ -34,10 +35,13 @@ public class MemberService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        Optional<MemberDto> memberDtoWrapper = memberMapper.findMember(userEmail);
+        //Member객체에 직접 UserDtatilsService를 구현하기도함
+        Optional<MemberDto> memberDtoWrapper = memberMapper.findByEmail(userEmail);
         MemberDto user = memberDtoWrapper.get();
         
         List<GrantedAuthority> authorities = new ArrayList<>();
+        
+        //Member객체내에서 권환을 체크 후 authorities에 담기
         
         //로그인한 유저의 Role을 가져와서 User 객체에 담아주기
 		if (("admin@admin.com").equals(userEmail)) {
