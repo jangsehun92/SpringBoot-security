@@ -5,7 +5,7 @@ SpringBoot 에서 security를 적용해본다.(예제)
 
 * 회원가입시 권한 설정
 * 로그인
-* 권한에 따른 처리
+* 유저 권한에 따른 처리
 
 ## Mac OS 환경에서 VScode 오류
 * Java Test가 실행되지않음
