@@ -17,6 +17,7 @@ public class MemberDto{
     private int id;
     private String email;
     private String password;
+    private String role;
     private LocalDateTime createdDate;
     private LocalDateTime modefiedDate;
 

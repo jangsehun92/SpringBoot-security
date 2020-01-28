@@ -10,7 +10,7 @@ import jsh.project.security.dto.MemberDto;
 @Mapper
 public interface MemberMapper{
     public int save(Member member);
-
+    
     public Optional<MemberDto> findByEmail(String userEmail);
     
 }

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jsh.project.security.dao.AuthMapper;
 import jsh.project.security.dao.MemberMapper;
 import jsh.project.security.domain.Role;
 import jsh.project.security.dto.MemberDto;
@@ -23,14 +24,17 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MemberService implements UserDetailsService{
     private MemberMapper memberMapper;
+    private AuthMapper authMapper;
 
     @Transactional
-    public int joinUser(MemberDto memberDto){
-        //회원가입시 Role부여하기
-        //memberDto.setRole();
+    public void joinUser(MemberDto memberDto){
+        //회원가입시 Role부여하기(일반 회원 가입)
+        memberDto.setRole(Role.MEMBER.getValue());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        return memberMapper.save(memberDto.toDomainObject());
+
+        memberMapper.save(memberDto.toDomainObject());
+        authMapper.save(memberDto.getEmail());
     }
 
 	@Override
@@ -41,15 +45,8 @@ public class MemberService implements UserDetailsService{
         
         List<GrantedAuthority> authorities = new ArrayList<>();
         
-        //Member객체내에서 권환을 체크 후 authorities에 담기
-        
-        //로그인한 유저의 Role을 가져와서 User 객체에 담아주기
-		if (("admin@admin.com").equals(userEmail)) {
-            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
-        } else {
-            authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
-        }
-        
+        authorities.add(new SimpleGrantedAuthority(authMapper.findByEmail(userEmail)));
+
         return new User(user.getEmail(), user.getPassword(), authorities);
 
 	}
