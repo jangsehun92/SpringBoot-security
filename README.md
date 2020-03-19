@@ -1,5 +1,5 @@
 # SpringBoot-security
-SpringBoot 에서 security를 적용해본다.(예제)
+SpringBoot 에서 security를 적용해본다.(예제 코드)
 
 ## 구현기능
 
