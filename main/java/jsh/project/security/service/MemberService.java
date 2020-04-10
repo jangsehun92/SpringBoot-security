@@ -39,7 +39,7 @@ public class MemberService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        //Member객체에 직접 UserDtatilsService를 구현하기도함
+        //Member객체에 직접 UserDtatils를 구현하기도함
         Optional<MemberDto> memberDtoWrapper = memberMapper.findByEmail(userEmail);
         MemberDto user = memberDtoWrapper.get();
         
